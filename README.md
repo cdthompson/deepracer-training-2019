@@ -81,7 +81,7 @@ This was grown out of necessity and not out of convenience.  Therefore it is com
 
 ----
 
-## Twitch Streaming
+# Twitch Streaming
 
 I streamed training at [https://www.twitch.tv/deepstig](https://www.twitch.tv/deepstig) later in the season.  I used [OBS](https://obsproject.com/) to host a browser-based UI with a VLC stream overlay, sending frames out of my local training simulation via ffmpeg over udp.
 
@@ -95,7 +95,7 @@ I streamed training at [https://www.twitch.tv/deepstig](https://www.twitch.tv/de
 
 ----
 
-#Log Analysis
+# Log Analysis
 
 Based on [AWS DeepRacer Workshop](https://github.com/aws-samples/aws-deepracer-workshops/blob/master/log-analysis/DeepRacer%20Log%20Analysis.ipynb) Jupyter notebook but heavily modified.  Any time I had a question about training progress or simulation behavior I would add some new features to this.  Its really overgrown now but gives me a full and complete picture of training as I run it.
 
@@ -142,19 +142,10 @@ Unfortunately, the winners were so close that leaderboard position had a large p
 [airflow/deepracer_submit_dag.py](airflow/deepracer_submit_dag.py) - Submit a model for evaluation every 30 minutes
 
 
+---
 
 
-
-
-
-
-
-
-
-
-
-
-## Resources
+# Resources
 
 ### Official AWS Resources
 
