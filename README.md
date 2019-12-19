@@ -126,7 +126,7 @@ For brevity, I'll pull out a few interesting sections but you can click to the [
 
 **Interesting items**:
 
-[log_analysis/DeepRacer Log Analysis.ipynb](log_analysis/DeepRacer Log Analysis.ipynb) - The notebook
+[log_analysis/DeepRacer Log Analysis.ipynb](log_analysis/DeepRacer%20Log%20Analysis.ipynb) - The notebook
 
 [log_analysis/images/*](log_analysis/images/) - Still image captures of a variety of tracks to use in analysis, such as running it through the model to get action probabilities
 
