@@ -70,7 +70,7 @@ This was grown out of necessity and not out of convenience.  Therefore it is com
 - dr-uploader - background synchronization of training assets and logs to S3 bucket
 - minio - S3 replacement to store training checkpoints locally
 
-**Intersting bits:**
+**Interesting bits:**
 
 [container/Dockerfile.*](container) - Dockerfiles for the local training setup
 
