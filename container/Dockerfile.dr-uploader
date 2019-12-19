@@ -1,0 +1,10 @@
+# A very simple container to repeatedly sync local path to s3
+FROM ubuntu:xenial
+
+RUN apt-get update && apt-get install -y python-pip
+RUN pip install awscli
+
+COPY container/uploader.sh /uploader.sh
+RUN chmod 755 /uploader.sh
+WORKDIR /
+ENTRYPOINT ["/uploader.sh"]

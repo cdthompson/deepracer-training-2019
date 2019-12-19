@@ -1,0 +1,58 @@
+FROM tensorflow/tensorflow:1.11.0-gpu-py3
+
+# Set some env values which are not dynamic.  This will
+# cause pkg installs to not ask questions
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Add some helpers for debugging
+RUN apt-get update && apt-get install -y \
+  apt-utils \
+  sudo
+
+# Hinted from robomaker container
+RUN useradd -ms /bin/bash robomaker
+RUN echo "robomaker:robomaker" | chpasswd && adduser robomaker sudo
+#RUN usermod -a -G sudo robomaker
+
+# Add Amazon's custom build of Gazebo for RoboMaker
+ADD container/opt.tgz /
+
+# Hook for system python3 to find markov module
+ADD container/sagemaker_rl_agent-0.0.1-py3.5.pth /usr/local/lib/python3.5/dist-packages/sagemaker_rl_agent-0.0.1-py3.5.pth
+
+USER robomaker
+
+COPY container/requirements-gpu.txt /home/robomaker/requirements.txt
+
+# Extract the colcon bundle (unmodified from AWS) and set up the container to run it
+RUN mkdir -p /home/robomaker/workspace/bundle-store/deepracer-simapp/
+
+# This bundle should be downloaded from s3://deepracer-managed-resources-us-east-1/deepracer-simapp.tar.gz
+ADD robomaker/bundle.tar /home/robomaker/workspace/bundle-store/deepracer-simapp/
+
+USER root
+
+# Install specific dependencies for markov into the system python modules directory
+RUN pip3 install --upgrade -r /home/robomaker/requirements.txt
+
+USER robomaker
+
+# Set up the command necessary to set up the colcon runtime environment.  This needs to be included in command parameters
+#ENV AWS_ROBOMAKER_SIMULATION_APPLICATION_SETUP="BUNDLE_CURRENT_PREFIX=/home/robomaker/workspace/bundle-store/deepracer-simapp-2019-08-31 source /home/robomaker/workspace/bundle-store/deepracer-simapp-2019-08-31/setup.sh; export BUNDLE_CURRENT_PREFIX=/home/robomaker/workspace/bundle-store/deepracer-simapp-2019-08-31;"
+
+WORKDIR /home/robomaker/workspace/bundle-store/deepracer-simapp/
+
+# Patch the colcon bundle with our customizations
+COPY patch /home/robomaker/workspace/bundle-store/deepracer-simapp/
+
+
+# For training output. Can be overridden by setting ALGO_MODEL_DIR
+RUN mkdir -p /opt/ml/model
+RUN mkdir -p /home/robomaker/workspace/bundle-store/deepracer-simapp/custom_files/
+
+WORKDIR /home/robomaker
+
+ENV NODE_TYPE="SAGEMAKER_TRAINING_WORKER"
+
+ENTRYPOINT ["/bin/bash", "-c"]
+CMD [""]

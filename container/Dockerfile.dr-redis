@@ -1,0 +1,7 @@
+FROM redis:latest
+
+EXPOSE 6379
+
+COPY container/redis.conf /usr/local/etc/redis.conf
+
+CMD ["/usr/local/etc/redis.conf", "--loglevel", "notice"]

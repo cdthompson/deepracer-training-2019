@@ -1,0 +1,63 @@
+title: phi
+description: Phi is for testing out race-line headings as primary influence.  The
+	action space is constrained since that yielded quick convergence in other
+	tests.
+target: If phi does well with heading tracking, we will hope to use it as SEP submission.
+
+lessons:
+- session1: Mexico track, race-line heading tracking, slower speed (3) to get completion rates reasonably high
+	GREAT convergence, Great track completion rate, but not a great time due to slow speeds.  Looks also as
+	if the heading incentive is also telling the car to crash into the walls.
+- session2: higher speed
+	Good convergence for the first few iterations, then started losing speed and stability.  I can
+	see from the heatmap that the car is not following the race line as much as it could be
+- session3: add proximity to race line for the reward
+	While I don't see improvement on times, I do see in the heatmap that the car is staying closer to the
+	race line.  It may be that the difference in track position didn't have as much tangible effect
+	on track times as it could, or that learning rates are just too high for the subtle difference in
+	reward. It was not bad so i will try again with higher speeds and lower learning rate
+- session4: biggest change will be action space so we'll introduce that now before tweaking hyperparameters; trying
+	a shift in steering angle since the model leans HEAVILY on left-30deg beyond other actions.  Shifted
+	steering angles 5deg left for all actions in order to see how far the car will use them.
+	Shift in steering caused more balance between the left-most and second-left-most actions, while the
+	training and completion metrics all seem flat.  Will continue tuning other parameters
+- session5: higher speeds (5) and lower learning rate (0.00003). Modified together to see if we can advance our training
+	results quickly due to running out of SEP time.
+	Convergence was helped GREATLY by lower learning rate but only improved evaluation results for the first 7
+	iterations before completion rate and pace started to get worse.
+- session6: adjust reward structure for race-line-factor to be 0.75 up from 0.5. Run for 5 hours had GREAT convergence,
+	but possibly too much as entropy is way down and the car might not like introducing differing speeds:$
+- session7: higher speed
+- session7a: retry of higher speed, but lower entropy and learning rate hyperparameters
+	This had a hard time converging, and as well had a very low completion rate.  Trying again with minor
+	hyperparameters adjustments
+- session7b: try higher speed again, this time giving sharpest turn a lower speed and bumping the favorite action
+	to 0.5 higher.  Also increase learning rate to hopefully converge better while keeping entropy low to
+	keep the race line
+	EXCELLENT convergence, even some 100% completion times, though evaluation did not fare well as model
+	could not complete the track.  Training went for ~4 hours which was still converging
+- session8: Continue session7b, but stop round robin starts and only do starts from waypoint zero.  Hopefully
+	this will allow us to stabilize the race-line along the harder curves where starting position of mid-track
+	is not something that will happen during evaluations
+	Fair convergence, good improvement on start of track but seems that the progress dies off in later steps
+	which may be due to entropy and loss_type hyperparameters trying to inject randomness in later steps.
+- session8a: Same as session8 except to swap loss_type for MSE and lower entropy to encourange the model to
+	stay more stable and reach further into the track
+- session8b:
+- session9: Faster speeds all across
+	Bad convergence
+- session9b:
+- session9c: Too fast/sharp on turns meant always wiping out on turn 1
+- session9d: Turn down sharp turns to avoid skids, leaving narrow angles at higher speeds
+- session9e: Some convergence (hyperparams were good) though the model kept crashing between 20-40 percent
+	progress, too unstable to make it through evaluations.  Adjusted tight turns to be slower and give
+	the car some room to navigate turns easily
+- session9f: found and fixed a bug in the race line heading calculation, specifically around +/-180
+	Convergence was good for the hour it ran but I wonder if the change_starting_position is causing
+	too little training for later legs.  Will continue this model training with other settings
+- session10: Turn down entropy all the way (variance in car handling is enough entropy) and turn on
+	round-robin starts to hopefully get a little more resilience in the model, hoping to raise
+	completion rates
+	Good convergence but very slow in evaluations, i'm chalking it up to round robin starts
+- session10a: Turning round-robin starts back off while turning entropy down all the way to zero.
+- session9g:

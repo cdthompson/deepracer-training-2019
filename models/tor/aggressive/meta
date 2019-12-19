@@ -1,0 +1,4 @@
+- session1: Started out with aggressive speeds 4/6/8 and model started to perform worse
+	about the time it got to 40% track completion. 
+- session1b: Fixed some hyperparameters back to near defaults while turning speed down
+	to 2/4/6

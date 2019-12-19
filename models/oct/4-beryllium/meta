@@ -1,0 +1,14 @@
+title: beryllium (Be)
+description: Beryllium is to abandon novel or experimental strategies and try to
+	aim for simplicity, allowing us a good leaderboard position which we
+	can incrementally improve upon
+target: OCT
+
+lessons:
+- session1: small action space, flat speeds at what should be the proper turn
+	angles for this track (25deg worked well on previous generations)
+	GREAT placement from this model, where we leveraged the models choice
+	of actions at even pace (speed 4) and afterwards tuned them up to greater
+	speeds.
+- session2a: continue training just beause i've had so little success with
+	other models

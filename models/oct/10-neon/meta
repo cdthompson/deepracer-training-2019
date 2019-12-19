@@ -1,0 +1,20 @@
+title: Neon (Ne)
+description: Neon is aimed at testing sparse rewards based on progress
+	and steps taken (i.e. time)
+	by training on the straight track at full throttle.
+	Checkpoints are evenly spaced every 10 progress
+lessons:
+- session1: 3-6-9 speeds
+- session2: lower learning rate, increase batch size to 128
+- session3: lower beta entropy, increase batch size to 256
+- session4: increase batch size to 512
+- session5: lower learning rate, increase iteration episodes, lower epochs (NaN crash)
+	- session6: lower learning rate, increase iteration episodes
+	- session6a: top speed to 12, start round-robin
+- session5a: top speed to 11, increase iteration episode
+	session5a-tune1: 6@20->7@17, 3@35->3@30 Currently Oct standing at 40th place 9.650
+	session5a-tune2: 7@17=>7@20, 11@0->11.5@0
+
+- session5b: stay with action space that is working (3/6/9) and tune it up to
+	use full throttle in more places.  Also fix a few checkpoints which
+	caused bad incentives to crash

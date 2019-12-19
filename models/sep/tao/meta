@@ -1,0 +1,4 @@
+title: tao
+description: Tao is for race-line proximity rewards, capping at 1.0 per step
+target: This model is intended for SEP fully trained, but speeding up learning
+	by direct correlation of camera view with reward points.

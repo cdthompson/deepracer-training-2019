@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<launch>
+    <param name="WORLD_NAME" value="$(env WORLD_NAME)" />
+    <param name="MODEL_S3_BUCKET" value="$(env MODEL_S3_BUCKET)" />
+    <param name="MODEL_S3_PREFIX" value="$(env MODEL_S3_PREFIX)" />
+    <param name="AWS_REGION" value="$(env APP_REGION)" />
+    <param name="AWS_ENDPOINT_URL" value="$(env AWS_ENDPOINT_URL)" />
+    <param name="METRICS_S3_BUCKET" value="$(env METRICS_S3_BUCKET)" />
+    <param name="METRICS_S3_OBJECT_KEY" value="$(env METRICS_S3_OBJECT_KEY)" />
+    <param name="NUMBER_OF_TRIALS" value="$(env NUMBER_OF_TRIALS)" />
+    <param name="ROBOMAKER_SIMULATION_JOB_ACCOUNT_ID" value="$(env ROBOMAKER_SIMULATION_JOB_ACCOUNT_ID)" type="str" />
+    <param name="AWS_ROBOMAKER_SIMULATION_JOB_ID" value="$(env AWS_ROBOMAKER_SIMULATION_JOB_ID)" />
+    <param name="MAX_JOB_DURATION" value="$(env MAX_JOB_DURATION)" />
+    <param name="SIM_UPDATE_RATE" value="$(optenv SIM_UPDATE_RATE 1000.0)" />
+
+    <param name="JOB_TYPE" value="EVALUATION" />
+
+    <include file="$(find deepracer_simulation_environment)/launch/racetrack_with_racecar.launch">
+        <arg name="world_name" value="$(env WORLD_NAME)" />
+        <arg name="kinesis_video_stream_name" value="$(env KINESIS_VIDEO_STREAM_NAME)" />
+    </include>
+
+    <node name="agent" pkg="deepracer_simulation_environment" type="run_evaluation_rl_agent.sh" output="screen" required="true"/>
+</launch>

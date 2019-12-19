@@ -1,0 +1,108 @@
+FROM ubuntu:xenial
+
+#ENV SOMETHING=default
+
+# This works. If SOMETHING is passed at runtime, it shows up in the env output
+#ENTRYPOINT ["/bin/bash"]
+#CMD ["-c","env"]
+
+
+# This works, where command evaluates the variable which is:
+#    a) passed in at 'docker run' time
+#    b) evaluated within the container at run time
+#
+#  docker build -f Dockerfile -t env-test .
+#  docker run -i -t -e SOMETHING=bye env-test
+#ENTRYPOINT ["/bin/bash"]
+#CMD ["-c","echo ${SOMETHING}"]
+
+
+# This works
+#ENTRYPOINT ["/bin/bash"]
+#CMD ["-c","echo \"SOMETHING is '${SOMETHING}'\""]
+
+# This also works, same output as above, omitting CMD and command from 'docker run'
+#ENTRYPOINT ["/bin/bash","-c","echo \"SOMETHING is '${SOMETHING}'\""]
+
+
+# This works for evaluating a var and also running something after it
+#ENTRYPOINT ["/bin/bash","-c","echo \"SOMETHING is '${SOMETHING}'\"; env"]
+
+# DOES NOT WORK
+#ENTRYPOINT ["/bin/bash","-c","echo \"SOMETHING is '${SOMETHING}'\";","env"]
+
+# DOES NOT WORK
+#ENTRYPOINT ["/bin/bash","-c","echo \"SOMETHING is '${SOMETHING}'\""]
+#CMD [";env"]
+
+# DOES NOT WORK
+#ENTRYPOINT ["/bin/bash","-c","echo \"SOMETHING is '${SOMETHING}'\";"]
+#CMD ["env"]
+
+# This works
+# This works
+#ENTRYPOINT ["/bin/bash","-c","--","echo \"SOMETHING is '${SOMETHING}'\"; env"]
+
+############
+# ATTEMPTS TO PASS CMD on 'docker run' command
+
+# DOES NOT WORK
+#ENTRYPOINT ["/bin/bash"]
+
+# $ docker run -i -t -e SOMETHING=HI=bye env-test "env"
+# /usr/bin/env: /usr/bin/env: cannot execute binary file
+# $ docker run -i -t -e SOMETHING=HI=bye env-test "echo 'hi'"
+# /bin/bash: echo 'hi': No such file or directory
+#
+#ENTRYPOINT ["/bin/bash","-c"]
+
+
+# DOES NOT WORK:
+# 	docker run -i -t -e SOMETHING=HI=bye env-test '; env'
+# 	docker run -i -t -e SOMETHING=HI=bye env-test env
+#ENTRYPOINT ["/bin/bash","-c","echo \"SOMETHING is '${SOMETHING}'\""]
+
+# DOES NOT WORK:
+# 	docker run -i -t -e SOMETHING=HI=bye env-test '; env'
+# 	docker run -i -t -e SOMETHING=HI=bye env-test env
+#ENTRYPOINT ["/bin/bash","-c","echo \"SOMETHING is '${SOMETHING}'\"; "]
+
+
+# DOES NOT WORK
+#	docker run -i -t -e SOMETHING=HI=bye -e COMMAND=pwd env-test
+#ENTRYPOINT ["/bin/bash"]
+#CMD ["-c","echo \"SOMETHING is '${SOMETHING}'\";","${COMMAND}"]
+
+
+# This works
+#	docker run -i -t -e SOMETHING=HI=bye -e COMMAND=env env-test
+#ENTRYPOINT ["/bin/bash"]
+#CMD ["-c","echo \"SOMETHING is '${SOMETHING}'\";${COMMAND}"]
+
+
+# DOES NOT WORK
+#ENTRYPOINT ["/bin/bash"]
+#CMD ["-c","${SETUP}"]
+
+
+# DOES NOT WORK
+#ENTRYPOINT ["/bin/bash","-c","${SETUP};${COMMAND}"]
+
+
+
+##########
+# ATTEMPTS TO SET SOME THINGS UP AT BUILD TIME
+ENV SETUP="HI=bye;export HI;"
+
+# THIS WORKS
+#	docker run -i -t env-test 'echo ${SETUP}; env'
+#	docker run -i -t env-test 'bash -c "${SETUP} env"'
+#	docker run -i -t -e SETUP="HI=hi;export HI;" env-test 'bash -c "${SETUP} env"'
+ENTRYPOINT ["/bin/bash","-c"]
+
+
+# VERDICT
+#
+# a) SETUP should be based into DOCKERFILE since it has path-specific stuff
+# b) invokation of SETUP should be within the CMD passed into 'docker run'
+

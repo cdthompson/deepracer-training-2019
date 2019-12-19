@@ -1,0 +1,50 @@
+{
+    "arn": "arn:aws:robomaker:us-east-1:345864641105:simulation-job/sim-wlmm3sw1h028",
+    "status": "Pending",
+    "lastUpdatedAt": 1565878766.0,
+    "failureBehavior": "Fail",
+    "clientRequestToken": "20190815081919-129E1A38-7F36-4502-B085-A5EB326A4070",
+    "maxJobDurationInSeconds": 1200,
+    "simulationTimeMillis": 0,
+    "iamRole": "arn:aws:iam::345864641105:role/service-role/AWSDeepRacerRoboMakerAccessRole",
+    "simulationApplications": [
+        {
+            "application": "arn:aws:robomaker:us-east-1:345864641105:simulation-application/deepracer-simapp-051bbb71-b8cb-4898-a31f-979631825e54/1564689218391",
+            "applicationVersion": "$LATEST",
+            "launchConfig": {
+                "packageName": "deepracer_simulation_environment",
+                "launchFile": "evaluation.launch",
+                "environmentVariables": {
+                    "APP_REGION": "us-east-1",
+                    "KINESIS_VIDEO_STREAM_NAME": "does-not-exist",
+                    "METRICS_S3_BUCKET": "aws-deepracer-b6c3c104-eef5-4878-a257-d981cd204d62",
+                    "METRICS_S3_OBJECT_KEY": "DeepRacer-Manually-Invoked-Training-Jobs/20190815081919-129E1A38-7F36-4502-B085-A5EB326A4070/DeepRacer-Metrics/EvaluationMetrics-345864641105-20190815081919-129E1A38-7F36-4502-B085-A5EB326A4070.json",
+                    "MODEL_S3_BUCKET": "aws-deepracer-b6c3c104-eef5-4878-a257-d981cd204d62",
+                    "MODEL_S3_PREFIX": "DeepRacer-Manually-Invoked-Training-Jobs/20190814230716-C6B8F413-FDA4-4D22-AF5C-24E6E2FA2029/DeepRacer-SageMaker-RoboMaker-comm-345864641105-20190814230716-C6B8F413-FDA4-4D22-AF5C-24E6E2FA2029/",
+                    "NUMBER_OF_TRIALS": "5",
+                    "ROBOMAKER_SIMULATION_JOB_ACCOUNT_ID": "345864641105",
+                    "WORLD_NAME": "Virtual_May19_Train_track"
+                }
+            }
+        }
+    ],
+    "tags": {
+        "DeepRacer-Manually-Invoked-Training-Jobs": "true",
+        "JOB_ID": "20190815081919-129E1A38-7F36-4502-B085-A5EB326A4070"
+    },
+    "vpcConfig": {
+        "subnets": [
+            "subnet-0b462e2666bfc8b42",
+            "subnet-0c17dcc711ca0d647",
+            "subnet-0308c84b560b7523f",
+            "subnet-02859793120cd62b1",
+            "subnet-0907b942eaf144f31",
+            "subnet-0f34973fdfcaac137"
+        ],
+        "securityGroups": [
+            "sg-0b9bd3a41e11cf278"
+        ],
+        "vpcId": "vpc-042e38b3223fbe90c",
+        "assignPublicIp": true
+    }
+}

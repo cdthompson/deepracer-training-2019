@@ -1,0 +1,4 @@
+title: rho
+description: This is a simple "progress over time" reward with a rather large but fast action space (4-9).  This approach was the fastest on
+             the August virtual circuit track.  This model is training partly to validate local setup but also with an eye on the September
+             virtual circuit race.

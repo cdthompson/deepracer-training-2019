@@ -1,0 +1,29 @@
+title: Carbon (C)
+description: Carbon builds on the knowledge gained from Boron, where the 
+	minimal action space was too small to navigate all of the track
+	successfully. 
+	We also learned the limits of speed vs steering angle.
+	We also had successful focused training on the serpentine track
+	by disabling round robin restarts
+target: OCT
+lessons:
+- session1: Tried new action space, encouraged by results up front where
+	the completion rate was growing, even a few complete laps.
+	Stopped the training before it converged too much since the car
+	had been not succesfully navigated a few tough areas.
+- session2: Lower learning rate and entropy in order to get the car to gain 
+	more experience near the ideal solution and not be so erratic.
+	Stopped again after much improvement but noticing that the car
+	specifically can't navigate the serpentine well.  
+- session3: Changed the reward to promote race line position (vs just heading) 
+	and disabled round-robin starts. Also added wheel factor to
+	rewards in order to penalize hitting the barrier, which I suspect
+	is causing wipeouts at high speed on the final turn.
+	There were a handful of nicely executed episodes but no complete
+	laps and probably due to the high speed hitting track edges
+	or nebulous rewards at certain parts of the track.
+- session4: focused training on start position.  Lower minibatch size
+	and learning rate to ease convergence and allow time for full
+	laps to happen
+	
+		

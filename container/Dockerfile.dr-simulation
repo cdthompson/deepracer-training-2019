@@ -1,0 +1,377 @@
+FROM osrf/ros:kinetic-desktop-xenial
+
+# Set some env values which are not dynamic.  This will
+# cause pkg installs to not ask questions
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Piecemeal packages from dpkg -l diffing
+RUN apt-get update && apt-get install -y \
+  aptdaemon \
+  aspell \
+  aspell-en \
+  bc \
+  bsdmainutils \
+  cppcheck \
+  dbus-x11 \
+  dconf-cli \
+  debhelper \
+  devilspie \
+  dh-strip-nondeterminism \
+  dictionaries-common \
+  diffstat \
+  docutils-doc \
+  emacsen-common \
+  enchant \
+  exo-utils \
+  freeglut3-dev \
+  gettext \
+  gettext-base \
+  gfortran \
+  gfortran-5 \
+  gir1.2-atk-1.0 \
+  gir1.2-freedesktop \
+  gir1.2-gdkpixbuf-2.0 \
+  gir1.2-glib-2.0 \
+  gir1.2-gtk-3.0 \
+  gir1.2-ibus-1.0 \
+  gir1.2-packagekitglib-1.0 \
+  gir1.2-pango-1.0 \
+  gnome-desktop3-data \
+  gnome-session \
+  gnome-session-bin \
+  gnome-session-common \
+  gnome-settings-daemon \
+  gnome-settings-daemon-schemas \
+  groff-base \
+  gstreamer1.0-plugins-good \
+  gstreamer1.0-x \
+  hardening-includes \
+  hunspell-en-us \
+  hwdata \
+  ibus \
+  ifupdown \
+  iio-sensor-proxy \
+  im-config \
+  intltool-debian \
+  iproute2 \
+  isc-dhcp-client \
+  isc-dhcp-common \
+  krb5-locales \
+  libaa1 \
+  libaccountsservice0 \
+  libapt-inst2.0 \
+  libapt-pkg-perl \
+  libarchive-zip-perl \
+  libasound2-plugins \
+  libaspell15 \
+  libasprintf-dev \
+  libasprintf0v5 \
+  libatm1 \
+  libaudio2 \
+  libauthen-sasl-perl \
+  libavc1394-0 \
+  libblas-dev \
+  libbullet-dev \
+  libbulletcollision2.83.6 \
+  libbulletdynamics2.83.6 \
+  libbulletsoftbody2.83.6 \
+  libcaca0 \
+  libcanberra-gtk3-0 \
+  libcanberra-gtk3-module \
+  libcanberra0 \
+  libcgi-fast-perl \
+  libcgi-pm-perl \
+  libclass-accessor-perl \
+  libclone-perl \
+  libdata-alias-perl \
+  libdbus-glib-1-2 \
+  libdigest-hmac-perl \
+  libdns-export162 \
+  libdv4 \
+  libemail-valid-perl \
+  libenchant1c2a \
+  libencode-locale-perl \
+  libexo-1-0 \
+  libexo-common \
+  libexo-helpers \
+  libexporter-tiny-perl \
+  libfcgi-perl \
+  libfftw3-single3 \
+  libfile-basedir-perl \
+  libfile-stripnondeterminism-perl \
+  libfreeimage-dev \
+  libfribidi0 \
+  libgeocode-glib0 \
+  libgettextpo-dev \
+  libgettextpo0 \
+  libgfortran-5-dev \
+  libgirepository-1.0-1 \
+  libglib2.0-bin \
+  libglib2.0-dev \
+  libgnome-desktop-3-12 \
+  libgpm2 \
+  libgstreamer-plugins-good1.0-0 \
+  libgtop-2.0-10 \
+  libgtop2-common \
+  libgts-0.7-5 \
+  libgts-bin \
+  libgts-dev \
+  libgweather-3-6 \
+  libgweather-common \
+  libharfbuzz-icu0 \
+  libhtml-parser-perl \
+  libhtml-tagset-perl \
+  libhttp-date-perl \
+  libhttp-message-perl \
+  libhunspell-1.3-0 \
+  libhyphen0 \
+  libibus-1.0-5 \
+  libiec61883-0 \
+  libignition-math2 \
+  libignition-math2-dev \
+  libignition-transport0 \
+  libignition-transport-dev \
+  libimobiledevice6 \
+  libio-html-perl \
+  libio-pty-perl \
+  libio-socket-inet6-perl \
+  libio-socket-ssl-perl \
+  libio-string-perl \
+  libipc-run-perl \
+  libipc-system-simple-perl \
+  libisc-export160 \
+  libjack-jackd2-0 \
+  libjavascriptcoregtk-4.0-18 \
+  liblapack-dev \
+  liblinearmath2.83.6 \
+  liblist-moreutils-perl \
+  liblocale-gettext-perl \
+  liblwp-mediatypes-perl \
+  libmail-sendmail-perl \
+  libmailtools-perl \
+  libmetacity-private3a \
+  libmng2 \
+  libmnl0 \
+  libnet-dns-perl \
+  libnet-domain-tld-perl \
+  libnet-ip-perl \
+  libnet-smtp-ssl-perl \
+  libnet-ssleay-perl \
+  libnewt0.52 \
+  libnm-glib4 \
+  libnm-util2 \
+  libnspr4 \
+  libnss3 \
+  libnss3-nssdb \
+  libpackagekit-glib2-16 \
+  libpangoxft-1.0-0 \
+  libpaper-utils \
+  libpaper1 \
+  libparse-debianchangelog-perl \
+  libpci3 \
+  libpcre3-dev \
+  libpcre32-3 \
+  libpcrecpp0v5 \
+  libperlio-gzip-perl \
+  libplist3 \
+  libpopt0 \
+  libprotoc-dev \
+  libprotoc9v5 \
+  libpulse-mainloop-glib0 \
+  libpulsedsp \
+  libpython3-dev \
+  libpython3.5-dev \
+  libqt4-dbus \
+  libqt4-declarative \
+  libqt4-designer \
+  libqt4-dev \
+  libqt4-dev-bin \
+  libqt4-help \
+  libqt4-network \
+  libqt4-opengl \
+  libqt4-opengl-dev \
+  libqt4-qt3support \
+  libqt4-script \
+  libqt4-scripttools \
+  libqt4-sql \
+  libqt4-sql-mysql \
+  libqt4-svg \
+  libqt4-test \
+  libqt4-xml \
+  libqt4-xmlpatterns \
+  libqtcore4 \
+  libqtdbus4 \
+  libqtgui4 \
+  libqtwebkit-dev \
+  libqtwebkit4 \
+  libraw1394-11 \
+  libsamplerate0 \
+  libsdformat4 \
+  libsdformat4-dev \
+  libsecret-1-0 \
+  libsecret-common \
+  libshout3 \
+  libsimbody-dev \
+  libsimbody3.5v5 \
+  libslang2 \
+  libsocket6-perl \
+  libsodium18 \
+  libspeexdsp1 \
+  libstartup-notification0 \
+  libsub-name-perl \
+  libsys-hostname-long-perl \
+  libtag1v5 \
+  libtag1v5-vanilla \
+  libtar-dev \
+  libtar0 \
+  libtbb-dev \
+  libtbb2 \
+  libtdb1 \
+  libtext-iconv-perl \
+  libtext-levenshtein-perl \
+  libtimedate-perl \
+  libunistring0 \
+  libupower-glib3 \
+  liburi-perl \
+  libusbmuxd4 \
+  libv4l-0 \
+  libv4lconvert0 \
+  libvorbisfile3 \
+  libvte-common \
+  libvte9 \
+  libwebkit2gtk-4.0-37 \
+  libwebkit2gtk-4.0-37-gtk2 \
+  libwebrtc-audio-processing-0 \
+  libwnck-3-0 \
+  libwnck-3-common \
+  libxfce4ui-1-0 \
+  libxfce4ui-common \
+  libxfce4util-bin \
+  libxfce4util-common \
+  libxfce4util7 \
+  libxfconf-0-2 \
+  libxi-dev \
+  libxmu-dev \
+  libxmu-headers \
+  libxres1 \
+  libxtables11 \
+  libyaml-libyaml-perl \
+  libzmq3-dev \
+  libzmq5 \
+  lintian \
+  locales \
+  man-db \
+  mesa-utils \
+  metacity \
+  metacity-common \
+  nautilus-data \
+  net-tools \
+  netbase \
+  netcat-openbsd \
+  patchutils \
+  pciutils \
+  po-debconf \
+  protobuf-compiler \
+  psmisc \
+  pulseaudio \
+  pulseaudio-module-x11 \
+  pulseaudio-utils \
+  python-apt-common \
+  python-bs4 \
+  python-chardet \
+  python-html5lib \
+  python-lxml \
+  python-pip-whl \
+  python-pygments \
+  python3-apt \
+  python3-aptdaemon \
+  python3-aptdaemon.pkcompat \
+  python3-dbus \
+  python3-defer \
+  python3-dev \
+  python3-gi \
+  python3-pip \
+  python3-pkg-resources \
+  python3-setuptools \
+  python3-wheel \
+  python3.5-dev \
+  qdbus \
+  qt-at-spi \
+  qt4-linguist-tools \
+  qt4-qmake \
+  qtcore4-l10n \
+  rename \
+  rtkit \
+  sdformat-sdf \
+  session-migration \
+  sound-theme-freedesktop \
+  t1utils \
+  udev \
+  unzip \
+  upower \
+  usbmuxd \
+  usbutils \
+  wget \
+  whiptail \
+  x11-xserver-utils \
+  xfce4-terminal \
+  xfconf \
+  xsltproc \
+  zenity \
+  zenity-common
+
+
+# Add some helpers for debugging
+RUN apt-get update && apt-get install -y \
+  apt-utils \
+  sudo
+
+# Hinted from robomaker container
+RUN useradd -ms /bin/bash robomaker
+RUN echo "robomaker:robomaker" | chpasswd && adduser robomaker sudo
+RUN adduser robomaker video
+
+# Add Amazon's custom build of Gazebo for RoboMaker
+ADD container/opt.tgz /
+
+# Add Xvfb
+RUN apt-get update && apt-get install -y xvfb
+
+USER robomaker
+
+# Add the entry point which sets up correct
+COPY container/entry_script.sh /home/robomaker/entry_script.sh
+COPY container/entry_script2.sh /home/robomaker/entry_script2.sh
+COPY container/entry_script3.sh /home/robomaker/entry_script3.sh
+COPY container/gzserver /home/robomaker/gzserver
+
+# Add a script to push h264 streams
+COPY container/snapshots.sh /home/robomaker/snapshots.sh
+COPY container/streamer.sh /home/robomaker/streamer.sh
+
+# Add a healthcheck script
+COPY container/simulation-health.sh /home/robomaker/simulation-health.sh
+
+# Extract the colcon bundle (unmodified from AWS) and set up the container to run it
+RUN mkdir -p /home/robomaker/workspace/bundle-store/deepracer-simapp/
+
+# This bundle should be downloaded from s3://deepracer-managed-resources-us-east-1/deepracer-simapp.tar.gz
+ADD robomaker/bundle.tar /home/robomaker/workspace/bundle-store/deepracer-simapp/
+
+# Set up the command necessary to set up the colcon runtime environment.  This needs to be included in command parameters
+#ENV AWS_ROBOMAKER_SIMULATION_APPLICATION_SETUP="BUNDLE_CURRENT_PREFIX=/home/robomaker/workspace/bundle-store/deepracer-simapp-2019-08-31 source /home/robomaker/workspace/bundle-store/deepracer-simapp-2019-08-31/setup.sh; export BUNDLE_CURRENT_PREFIX=/home/robomaker/workspace/bundle-store/deepracer-simapp-2019-08-31;"
+
+WORKDIR /home/robomaker/workspace/bundle-store/deepracer-simapp/
+
+# Patch the colcon bundle with our customizations
+COPY patch /home/robomaker/workspace/bundle-store/deepracer-simapp/
+
+# Set up output for the tensorboard logs and gif/mp4 generation
+RUN mkdir -p /opt/ml/model
+
+ENV NODE_TYPE="SIMULATION_WORKER"
+
+WORKDIR /home/robomaker
+
+ENTRYPOINT ["/bin/bash", "-c"]
+CMD [""]

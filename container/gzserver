@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -ex
+/opt/amazon/RoboMakerGazebo/bin/gzserver -s librobomaker_gazebo_metrics_plugin.so "$@" 

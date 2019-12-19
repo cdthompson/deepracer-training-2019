@@ -1,0 +1,15 @@
+title: lithium
+description: Lithium is for  training the October Canada_Training track with a
+	reward based on the race line and heading.
+target: OCT
+
+lessons:
+- session1: After running for a good few hours the completion rate was very low, around
+	40% averate.  I can see in evauation runs that the car like to drive straight
+	off the track.  I suspect there may be a few problems, possibly the action
+	space has speeds way too high, or that the model is "seeing" something where
+	it believes it is on a different part of the track and it should be going
+	straight (e.g. tree). 
+	I'll have to abandon this generation and improve (a) more conservative
+	action space, and (b) some conclusive analysis using images and tensorflow
+	which would prove that the car has incentive to drive straight.

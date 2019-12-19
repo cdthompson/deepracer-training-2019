@@ -1,0 +1,144 @@
+{
+  "action_space": [
+    {
+      "steering_angle": -30.98008432848432,
+      "speed": 2,
+      "index": 0
+    },
+    {
+      "steering_angle": -20.65338955232288,
+      "speed": 2,
+      "index": 1
+    },
+    {
+      "steering_angle": -10.32669477616144,
+      "speed": 2,
+      "index": 2
+    },
+    {
+      "steering_angle": 0,
+      "speed": 2,
+      "index": 3
+    },
+    {
+      "steering_angle": 10.32669477616144,
+      "speed": 2,
+      "index": 4
+    },
+    {
+      "steering_angle": 20.65338955232288,
+      "speed": 2,
+      "index": 5
+    },
+    {
+      "steering_angle": 30.98008432848432,
+      "speed": 2,
+      "index": 6
+    },
+    {
+      "steering_angle": -28.125,
+      "speed": 4,
+      "index": 7
+    },
+    {
+      "steering_angle": -18.75,
+      "speed": 4,
+      "index": 8
+    },
+    {
+      "steering_angle": -9.375,
+      "speed": 4,
+      "index": 9
+    },
+    {
+      "steering_angle": 0,
+      "speed": 4,
+      "index": 10
+    },
+    {
+      "steering_angle": 9.375,
+      "speed": 4,
+      "index": 11
+    },
+    {
+      "steering_angle": 18.75,
+      "speed": 4,
+      "index": 12
+    },
+    {
+      "steering_angle": 28.125,
+      "speed": 4,
+      "index": 13
+    },
+    {
+      "steering_angle": -22.577989835235556,
+      "speed": 6,
+      "index": 14
+    },
+    {
+      "steering_angle": -15.05199322349037,
+      "speed": 6,
+      "index": 15
+    },
+    {
+      "steering_angle": -7.525996611745185,
+      "speed": 6,
+      "index": 16
+    },
+    {
+      "steering_angle": 0,
+      "speed": 6,
+      "index": 17
+    },
+    {
+      "steering_angle": 7.525996611745185,
+      "speed": 6,
+      "index": 18
+    },
+    {
+      "steering_angle": 15.05199322349037,
+      "speed": 6,
+      "index": 19
+    },
+    {
+      "steering_angle": 22.577989835235556,
+      "speed": 6,
+      "index": 20
+    },
+    {
+      "steering_angle": -10.771054962258804,
+      "speed": 8,
+      "index": 21
+    },
+    {
+      "steering_angle": -7.180703308172536,
+      "speed": 8,
+      "index": 22
+    },
+    {
+      "steering_angle": -3.590351654086268,
+      "speed": 8,
+      "index": 23
+    },
+    {
+      "steering_angle": 0,
+      "speed": 8,
+      "index": 24
+    },
+    {
+      "steering_angle": 3.590351654086268,
+      "speed": 8,
+      "index": 25
+    },
+    {
+      "steering_angle": 7.180703308172536,
+      "speed": 8,
+      "index": 26
+    },
+    {
+      "steering_angle": 10.771054962258804,
+      "speed": 8,
+      "index": 27
+    }
+  ]
+}

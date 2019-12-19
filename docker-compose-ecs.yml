@@ -1,0 +1,129 @@
+#
+# This is the cluster configuration.  As guidance, the environment variables
+# set within this file should be ones that do not change regardless where
+# this cluster is run and what job it is working on.  
+#
+version: '3'
+services:
+
+  # Sidecar logger using fluentd to aggregate logs from all containers, store them to S3
+  dr-logger:
+    image: 345864641105.dkr.ecr.us-east-1.amazonaws.com/dr-logger:latest
+    container_name: dr-logger
+    ports:
+      - "24224:24224"
+    environment:
+      LOGGER_S3_DESTINATION_PATH:
+      AWS_ACCESS_KEY_ID:
+      AWS_SECRET_ACCESS_KEY:
+      AWS_ENDPOINT_URL:
+      AWS_DEFAULT_REGION: us-east-1
+
+  # Redis for local comms of graph inputs between rollout and training workers
+  dr-redis:
+    image: 345864641105.dkr.ecr.us-east-1.amazonaws.com/dr-redis:latest
+    container_name: dr-redis
+
+  # ROS + Gazebo + Coach rollout worker
+  dr-simulation:
+    image: 345864641105.dkr.ecr.us-east-1.amazonaws.com/dr-simulation:latest
+    # Allow external connections to gzserver
+    ports:
+      - 11345:11345
+    container_name: dr-simulation
+    healthcheck:
+      test: '/home/robomaker/simulation-health.sh'
+    command: ['/home/robomaker/entry_script2.sh stdbuf -oL -eL roslaunch deepracer_simulation_environment ${LAUNCH_FILE}']
+    logging:
+#     driver: fluentd
+#     driver: awslogs
+      driver: json-file
+    depends_on:
+      - dr-logger
+      - dr-redis
+    environment:
+      AWS_ACCESS_KEY_ID:
+      AWS_SECRET_ACCESS_KEY:
+      AWS_ENDPOINT_URL:
+      AWS_ROBOMAKER_SIMULATION_JOB_ARN:
+      AWS_ROBOMAKER_SIMULATION_JOB_ID:
+      AWS_ROBOMAKER_SIMULATION_RUN_ID:
+      AWS_ROBOMAKER_SIMULATION_APPLICATION_SETUP:
+      APP_REGION:
+      KINESIS_VIDEO_STREAM_NAME:
+      NUMBER_OF_TRIALS:
+      NUMBER_OF_EPISODES:
+      WORLD_NAME:
+      ALTERNATE_DRIVING_DIRECTION:
+      TARGET_REWARD_SCORE:
+      METRIC_NAME:
+      METRIC_NAMESPACE:
+      METRICS_S3_BUCKET:
+      METRICS_S3_OBJECT_KEY:
+      MODEL_METADATA_FILE_S3_KEY:
+      REWARD_FILE_S3_KEY:
+      MODEL_S3_BUCKET:
+      MODEL_S3_PREFIX:
+      ROBOMAKER_SIMULATION_JOB_ACCOUNT_ID:
+      SAGEMAKER_SHARED_S3_BUCKET:
+      SAGEMAKER_SHARED_S3_PREFIX:
+      TRAINING_JOB_ARN:
+      REDIS_HOST: dr-redis
+      MAX_JOB_DURATION:
+      ROBOMAKER_ROS_MASTER_URI:
+      ROBOMAKER_GAZEBO_MASTER_URI:
+      # The display here is specifically set for the privileged GPU talking through a unix socket
+      DISPLAY: :0
+      SM_TRAINING_ENV:
+      CHANGE_START_POSITION:
+      START_POSITION:
+
+  # Training worker
+  # This can support GPU or not, depending on '-gpu' suffix in commented parts below
+  dr-training:
+    image: 345864641105.dkr.ecr.us-east-1.amazonaws.com/dr-training:latest
+    logging:
+#     driver: fluentd
+#     driver: awslogs
+      driver: json-file
+    # tensorboard
+    ports:
+      - 6006:6006
+    tty: true
+    container_name: dr-training
+    command: ['python3 -m markov.training_worker ${TRAINING_WORKER_ARGS}']
+    depends_on:
+      - dr-logger
+      - dr-redis
+    environment:
+      AWS_ACCESS_KEY_ID:
+      AWS_SECRET_ACCESS_KEY:
+      AWS_ENDPOINT_URL:
+      AWS_ROBOMAKER_SIMULATION_JOB_ARN:
+      AWS_ROBOMAKER_SIMULATION_JOB_ID:
+      AWS_ROBOMAKER_SIMULATION_RUN_ID:
+      AWS_ROBOMAKER_SIMULATION_APPLICATION_SETUP:
+      APP_REGION:
+      KINESIS_VIDEO_STREAM_NAME:
+      NUMBER_OF_TRIALS:
+      NUMBER_OF_EPISODES:
+      WORLD_NAME:
+      ALTERNATE_DRIVING_DIRECTION:
+      TARGET_REWARD_SCORE:
+      METRIC_NAME:
+      METRIC_NAMESPACE:
+      METRICS_S3_BUCKET:
+      METRICS_S3_OBJECT_KEY:
+      MODEL_METADATA_FILE_S3_KEY:
+      REWARD_FILE_S3_KEY:
+      MODEL_S3_BUCKET:
+      MODEL_S3_PREFIX:
+      ROBOMAKER_SIMULATION_JOB_ACCOUNT_ID:
+      SAGEMAKER_SHARED_S3_BUCKET:
+      SAGEMAKER_SHARED_S3_PREFIX:
+      TRAINING_JOB_ARN:
+      REDIS_HOST: dr-redis
+      MAX_JOB_DURATION:
+      ROBOMAKER_ROS_MASTER_URI:
+      ROBOMAKER_GAZEBO_MASTER_URI:
+      SM_TRAINING_ENV:

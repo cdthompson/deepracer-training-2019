@@ -1,0 +1,9 @@
+title: Phosphorous (P)
+description: Phosphorous is an experiment to determine 2 things:
+	1) Can we successfully add a "braking" action?
+	2) Can we do rewards shaping by addition? previous attemps to shape by multiplication
+	   seem to have just confused the car.
+target: training experiments only
+lessons:
+- session1:
+		

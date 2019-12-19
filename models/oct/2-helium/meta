@@ -1,0 +1,11 @@
+title: helium
+description: Helium is a test model for trying out a "braking speed", where we introduce
+	a very low throttle to be used in anticipation of cornering.  This is to give
+	the car some time to decelerate before turning and hopefully avoid wipeouts.
+target: This is just a test for the theory, to be applied if successful
+
+lessons:
+- session1: simple speed-based reward converged completely at about 6 hours training, though
+	lap completion rate is very low.  A lower learning rate may have helped get the
+	car through the twisty section just by having more samples there.  Also some
+	focused training on that leg of the track could also help.

@@ -1,0 +1,7 @@
+title: Chlorine (Cl)
+description: Chloring is an experiment (A/B) for using a larger action space
+	with more turn angles, but otherwise the same as Beryllium rewards.
+target: training experiments only
+lessons:
+- session1: 
+

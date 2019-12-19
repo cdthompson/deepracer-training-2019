@@ -1,0 +1,9 @@
+title: Magnesium (Mg)
+description: Magnesium is continuing the sparse rewards strategy from
+	Sodium but we've had to start fresh to overcome a bad
+	reinforced action in the first turn (wipe-outs).  This also
+	lets us start a new model with the tuned environment
+	(masked top third of frame, suppress water features)
+target: October virtual circuit race
+lessons:
+- session1:

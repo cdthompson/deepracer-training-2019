@@ -1,0 +1,26 @@
+build/*
+**/__pycache__/
+log_analysis/logs/*
+log_analysis/intermediate_checkpoint/*
+__pycache__
+.DS_Store
+*.pyc
+
+# Ignore all the extracted robomaker colcon bundle assets
+robomaker/*.tar.gz
+robomaker/*.tar
+robomaker/version
+
+twitch/cache/*
+twitch/logs/*
+
+
+# Ignore experiment folder which just contains output data from training (tensorboard logs, gif/mp4 dumps, etc)
+experiment/*
+
+# Ignore tmp which is used for random hacking
+tmp/*
+
+**/.ipynb_checkpoints/
+.venv/
+

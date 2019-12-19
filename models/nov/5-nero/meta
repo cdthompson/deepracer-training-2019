@@ -1,0 +1,6 @@
+model: Nero
+description:
+	Nero is a simple test of sim2real by trying to get a car running at all in my
+	apartement wood floor test track.  Later training will focuse on generalization
+	but this will try to just replicate the lack of contrast between the roadway
+	and lane markers which exist in reality and in reinvent_wood virtual track.

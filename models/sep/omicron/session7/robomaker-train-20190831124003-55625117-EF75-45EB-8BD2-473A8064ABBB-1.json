@@ -1,0 +1,57 @@
+{
+    "arn": "arn:aws:robomaker:us-east-1:345864641105:simulation-job/sim-0h5vchg65zl9",
+    "status": "Pending",
+    "lastUpdatedAt": 1567269614.0,
+    "failureBehavior": "Fail",
+    "clientRequestToken": "20190831124003-55625117-EF75-45EB-8BD2-473A8064ABBB-1",
+    "maxJobDurationInSeconds": 3600,
+    "simulationTimeMillis": 0,
+    "iamRole": "arn:aws:iam::345864641105:role/service-role/AWSDeepRacerRoboMakerAccessRole",
+    "simulationApplications": [
+        {
+            "application": "arn:aws:robomaker:us-east-1:345864641105:simulation-application/deepracer-simapp-custom-test/1567095466134",
+            "applicationVersion": "$LATEST",
+            "launchConfig": {
+                "packageName": "deepracer_simulation_environment",
+                "launchFile": "distributed_training.launch",
+                "environmentVariables": {
+                    "APP_REGION": "us-east-1",
+                    "KINESIS_VIDEO_STREAM_NAME": "does-not-exist",
+                    "METRICS_S3_BUCKET": "aws-deepracer-b6c3c104-eef5-4878-a257-d981cd204d62",
+                    "METRICS_S3_OBJECT_KEY": "DeepRacer-Manually-Invoked-Training-Jobs/20190831124003-55625117-EF75-45EB-8BD2-473A8064ABBB/DeepRacer-Metrics/TrainingMetrics-345864641105-20190831124003-55625117-EF75-45EB-8BD2-473A8064ABBB.json",
+                    "METRIC_NAME": "TrainingRewardScore",
+                    "METRIC_NAMESPACE": "AWSDeepRacer",
+                    "MODEL_METADATA_FILE_S3_KEY": "DeepRacer-Manually-Invoked-Training-Jobs/20190831124003-55625117-EF75-45EB-8BD2-473A8064ABBB/model_metadata.json",
+                    "NUMBER_OF_EPISODES": "0",
+                    "REWARD_FILE_S3_KEY": "DeepRacer-Manually-Invoked-Training-Jobs/20190831124003-55625117-EF75-45EB-8BD2-473A8064ABBB/reward.py",
+                    "ROBOMAKER_SIMULATION_JOB_ACCOUNT_ID": "345864641105",
+                    "SAGEMAKER_SHARED_S3_BUCKET": "aws-deepracer-b6c3c104-eef5-4878-a257-d981cd204d62",
+                    "SAGEMAKER_SHARED_S3_PREFIX": "DeepRacer-Manually-Invoked-Training-Jobs/20190831124003-55625117-EF75-45EB-8BD2-473A8064ABBB/DeepRacer-SageMaker-RoboMaker-comm-345864641105-20190831124003-55625117-EF75-45EB-8BD2-473A8064ABBB/",
+                    "TARGET_REWARD_SCORE": "None",
+                    "TRAINING_JOB_ARN": "arn:aws:sagemaker:us-east-1:345864641105:training-job/deepracer-20190831124003-55625117-ef75-45eb-8bd2-473a8064abbb",
+                    "WORLD_NAME": "Virtual_May19_Train_track"
+                }
+            }
+        }
+    ],
+    "tags": {
+        "WORKER_ID": "1",
+        "DeepRacer-Manually-Invoked-Training-Jobs": "true",
+        "JOB_ID": "20190831124003-55625117-EF75-45EB-8BD2-473A8064ABBB"
+    },
+    "vpcConfig": {
+        "subnets": [
+            "subnet-0b462e2666bfc8b42",
+            "subnet-0c17dcc711ca0d647",
+            "subnet-0308c84b560b7523f",
+            "subnet-02859793120cd62b1",
+            "subnet-0907b942eaf144f31",
+            "subnet-0f34973fdfcaac137"
+        ],
+        "securityGroups": [
+            "sg-0b9bd3a41e11cf278"
+        ],
+        "vpcId": "vpc-042e38b3223fbe90c",
+        "assignPublicIp": true
+    }
+}

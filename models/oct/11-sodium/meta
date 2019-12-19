@@ -1,0 +1,19 @@
+title: Sodium (Na)
+description: Sodium is building on the success of Neon, using the same
+	sparse rewards strategy, but tuning the placement of checkpoints
+	after observing some unwanted "hunting" of the nearest skew of
+	the checkpoint.
+target: October virtual circuit race
+lessons:
+- session1: Good progress, though GPU crashed
+- session2: Good progress again, stopped just to tune hyperparameters
+- session3: Hyperparameter tuning: learning rate, batch size, entropy.
+	Lots of environmental hacks:
+		- mask top of images to tune out the buildings
+		- replace water textures to suppress ground features
+		- back up start position to 96%, closer to evaluation start
+- session3b: turn on round-robin: total failure, but could be due to too high of speeds
+- session3c: turn off round-robin again, make top speed 11 and 6@20->7@20 to ease the spin-outs
+	- session3c2: try to continue, but with modified second checkpoint; didn't progress
+- session3d: back up again
+	this guy is too weighted to turn at the exit of corner 1	

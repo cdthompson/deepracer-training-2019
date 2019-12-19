@@ -1,0 +1,18 @@
+title: upsilon
+description: Upsilon is for trying to train by severely constraining the action space,
+	the theory being that a car at the limit of tire grip at all times will always
+	be along the limit curve of speed-steer without wiping out.
+target: This is just a test for the theory, to be applied if successful
+
+lessons:
+- session1: very small action space gets convergence FAST.  Supports strategy of limiting to one speed-per-steer
+- session2: higher speeds cause slower convergence, not sure why, but possibly because physics of car are not as exact (throttle vs speed, etc)
+- session2a: added race line
+- session2b: much higher speed (7.5) has decent progress and GREAT pace, but doesn't converge well (entropy is rising)
+- session3: lower entropy hyperparameter helped training entropy but i suspect speed is too high, since completion rate is low
+- session4: lower turn speeds (4 @ 40deg) seemed to train the model to zig-zag as it preferred those lower speeds.  lower learning rate cause GREAT convergence (KL div, entropy) but ultimately low progress and bad pace, probably because of action space.
+- session5: (screwed up... meant to do mexico and accidentally did london loop with mexico race lines)
+- session5a: mexico track
+- session6: flat, no learning progress, no convergence
+- session6a: try adding heading factor to 5a, rmeoving race line position, turning down entropy
+- session6b:

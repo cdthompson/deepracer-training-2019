@@ -1,0 +1,9 @@
+title: Argon (Ar)
+description: Argon is A/B test against beryllium to check out
+	distance-based reward function
+target: training experiments only
+lessons:
+- session1: Session one was kind of not an A/B, since beryllium
+	had environments on while session1 did not.  
+- session1a: Try again but with environment back on
+

@@ -1,0 +1,8 @@
+title: Potassium (K)
+description: Potassium starts anew, with a good
+	shaped rewards function and action space targeted
+	at getting around toronto.
+target: training experiments only
+lessons:
+- session3a: Add race-line distance factor, also fix
+	a possible bug of not having heading calculations work

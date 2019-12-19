@@ -1,0 +1,129 @@
+{% extends "bootstrap/base.html" %}
+{% block head %}
+{{super()}}
+<meta http-equiv="refresh" content="30"/>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{{url_for('.static', filename='easytimer.js')}}"></script>
+<script>
+var timer = new easytimer.Timer();
+timer.start({precision: 'seconds', startValues: {seconds: {{ duration }} }});
+timer.addEventListener('secondsUpdated', function (e) {
+    $('#duration').html(timer.getTimeValues().toString());
+});
+</script>
+{{super()}}
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet"
+      href="{{url_for('.static', filename='bootswatch-darkly.min.css')}}">
+<link rel="stylesheet"
+      href="{{url_for('.static', filename='styles.css')}}">
+{% endblock %}
+
+{% block title %}
+DeepStig
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid frame">
+  <div class="row">
+    <div class="col-xl-5">
+
+      <div id="video-placeholder" class="container-fluid"><table class="table table-bordered"><tr><td>
+          <img class="img-fluid" src="images/video_placeholder.png">
+      </td></tr></table></div>
+
+      <div id="track" class="container-fluid"><table class="table"><tr><td>
+        <table class="table">
+          <tr>
+            <td>
+              <h5>Track</h5>
+              <img class="img-track" src="{{track_image}}">
+            </td>
+            <td>
+              <div class="row">
+                Model Name: <br/>
+              </div>
+              <div class="row">
+                <h2>{{ model }}</h2>
+              </div>
+              <div class="row">
+                Session Name:
+              </div>
+              <div class="row">
+                <h2 class="float-right">{{ session }}</h2>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td></tr></table> </div>
+
+    </div>
+    <div class="col-xl-7">
+
+      <div id="performance" class="container-fluid"><table class="table table-bordered"><tr><td>
+        <h5>Peak Performance</h5>
+        <table class="table table-bordered">
+          <tr>
+            <td>
+              <h1>{{ "%.2f" % metrics['fastest_episode']['pace'] }}s</h1><br/>
+              Fastest Lap Pace<br/>
+              Episode {{ metrics['fastest_episode']['number'] }}
+            </td>
+            <td>
+              <h1>{{ "%.2f" % metrics['most_rewarded_episode']['reward'] }}pt</h1><br/>
+              Most Rewarded Lap<br/>
+              Episode {{ metrics['most_rewarded_episode']['number'] }}
+            </td>
+            <td>
+              <h1>{{ "%.1f" % metrics['most_progress_episode']['progress'] }}%</h1><br/>
+              Furthest Lap<br/>
+              Episode {{ metrics['most_progress_episode']['number'] }}
+            </td>
+          </tr>
+        </table>
+      </td></tr></table></div>
+
+      <div id="training" class="container-fluid"><table class="table table-bordered"><tr><td>
+          <h5>Training Session</h5>
+          <table class="table table-bordered">
+            <tr>
+              <td>
+                <h3>{{ metrics['number_iterations'] }}</h3><br/>
+                Training Iterations
+              </td>
+              <td>
+                <h3>{{ metrics['number_episodes'] }}</h3><br/>
+                Simulation Episodes
+              </td>
+              <td>
+                <h3>{{ metrics['number_transitions'] }}</h3><br/>
+                Steps/Transitions
+              </td>
+              <td>
+                <h3><div id="duration">--:--:--</div></h3><br/>
+                Session Duration
+              </td>
+            </tr>
+          </table>
+      </td></tr></table> </div>
+
+      <div id="graphs" class="container-fluid"><table class="table table-bordered"><tr><td>
+        <div class="row">
+          <div class="col">
+            <h5>Last 10 Iterations</h5>
+          </div>
+          <div class="col">
+            blue = progress | red = pace | green = reward
+          </div>
+        </div>
+        <img class="img-fluid" src="{{training_image}}">
+      </td></tr></table> </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

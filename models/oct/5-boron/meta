@@ -1,0 +1,15 @@
+title: boron (B)
+description: Boron is an experiment to continue down the 'simplicity' path,
+	where we had success with good lap times using a 5-action model and
+	tuning cycles after training (modifying action space without retraining).
+target: OCT
+lessons:
+- session1: Very happy with success and pace of session1.  Driving was pretty
+	erratic but still able to tune the car up from ~14s to ~11s pace
+- session2: Retrain with new tuned action spaces, 3-30 left speed-steer and
+	8-15 right handers, values taken from session1 tuning
+- session3: Focused training session on the serpentine where we need to
+	train the can to drive straight through.  Use fixed start position
+	for all episodes and the race line in reward function.  Should take
+	two hours or so to teach him to navigate that properly.
+- session5a: turn off environment features in the sdf file

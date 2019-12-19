@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<launch>
+    <param name="WORLD_NAME" value="$(env WORLD_NAME)" />
+    <param name="SAGEMAKER_SHARED_S3_BUCKET" value="$(env SAGEMAKER_SHARED_S3_BUCKET)" />
+    <param name="SAGEMAKER_SHARED_S3_PREFIX" value="$(env SAGEMAKER_SHARED_S3_PREFIX)" />
+    <param name="TRAINING_JOB_ARN" value="$(env TRAINING_JOB_ARN)" />
+    <param name="METRICS_S3_BUCKET" value="$(env METRICS_S3_BUCKET)" />
+    <param name="METRICS_S3_OBJECT_KEY" value="$(env METRICS_S3_OBJECT_KEY)" />
+    <param name="AWS_REGION" value="$(env APP_REGION)" />
+    <param name="AWS_ENDPOINT_URL" value="$(env AWS_ENDPOINT_URL)" />
+    <param name="TARGET_REWARD_SCORE" value="$(env TARGET_REWARD_SCORE)" />
+    <param name="NUMBER_OF_EPISODES" value="$(env NUMBER_OF_EPISODES)" />
+    <param name="ROBOMAKER_SIMULATION_JOB_ACCOUNT_ID" value="$(env ROBOMAKER_SIMULATION_JOB_ACCOUNT_ID)" type="str" />
+    <param name="AWS_ROBOMAKER_SIMULATION_JOB_ID" value="$(env AWS_ROBOMAKER_SIMULATION_JOB_ID)" />
+    <param name="JOB_TYPE" value="TRAINING" />
+    <param name="CHANGE_START_POSITION" value="$(optenv CHANGE_START_POSITION true)" type="bool" />
+    <param name="ALTERNATE_DRIVING_DIRECTION" value="$(optenv ALTERNATE_DRIVING_DIRECTION false)" type="bool" />
+    <param name="START_POSITION" value="$(optenv START_POSITION 0.0)" />
+    <param name="MAX_JOB_DURATION" value="$(env MAX_JOB_DURATION)" />
+    <param name="SIM_UPDATE_RATE" value="$(optenv SIM_UPDATE_RATE 1000.0)" />
+
+    <include file="$(find deepracer_simulation_environment)/launch/racetrack_with_racecar.launch">
+        <arg name="world_name" value="$(env WORLD_NAME)" />
+        <arg name="kinesis_video_stream_name" value="$(env KINESIS_VIDEO_STREAM_NAME)" />
+        <arg name="kinesis_video_stream_region" value="$(env APP_REGION)" />
+    </include>
+
+    <node name="agent" pkg="deepracer_simulation_environment" type="run_rollout_rl_agent.sh" output="screen" required="true"/>
+</launch>

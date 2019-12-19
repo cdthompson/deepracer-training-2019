@@ -1,0 +1,4 @@
+title: sigma
+description: Sigma is for testing a simple progress reward function.  The theory is that we avoid the difficulty of
+             dealing with exponential rewards, as is the case with "progress over time" reward functions. 
+target: This model may potentially be useful for both SEP and TOR races

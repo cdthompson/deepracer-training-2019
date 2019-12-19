@@ -1,0 +1,12 @@
+# pip package requirements
+pylint
+numpy
+# useful for local development and analysis, not for CI
+pandas
+matplotlib
+shapely
+boto3
+sklearn
+tensorflow
+flask
+flask-bootstrap

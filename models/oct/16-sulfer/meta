@@ -1,0 +1,12 @@
+title: Sulfer (S)
+description: Sulfer is a simple basis of progress-based rewards along
+	the race line, itself significantly different from the center line.
+	We'll add rewards shaping in later sessions
+target: training experiments only
+lessons:
+- session1: Decent progress after 5 hours training with ~2% completion rate
+- session2: Add wheel factor shaping reward in order to speed up learning
+	by not relying only on one single episode end step in order to
+	learn about edges of the track
+	
+		

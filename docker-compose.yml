@@ -1,0 +1,215 @@
+#
+# This is the cluster configuration.  As guidance, the environment variables
+# set within this file should be ones that do not change regardless where
+# this cluster is run and what job it is working on.  
+#
+version: '2.4'
+services:
+
+  # Sidecar logger using fluentd to aggregate logs from all containers, store them to minio
+  dr-logger:
+    image: dr-logger:latest
+    container_name: dr-logger
+    build:
+      context: .
+      dockerfile: container/Dockerfile.dr-logger
+    ports:
+      - "24224:24224"
+    # Turn on for easy debugging of config
+#   volumes:
+#     - ./container/fluent.conf:/fluentd/etc/fluent.conf
+    environment:
+      LOGGER_S3_DESTINATION_PATH:
+      AWS_ACCESS_KEY_ID: minio
+      AWS_SECRET_ACCESS_KEY: miniokey
+      AWS_ENDPOINT_URL:
+      AWS_DEFAULT_REGION: us-east-1
+    depends_on:
+      - minio
+
+  # Synchronize all data files from minio to s3 for analysis and long-term storage
+  dr-uploader:
+    image: dr-uploader:latest
+    container_name: dr-uploader
+    build:
+      context: .
+      dockerfile: container/Dockerfile.dr-uploader
+    volumes:
+      - ../data:/data
+    command: /data/${UPLOADER_SOURCE_PATH} ${UPLOADER_S3_DESTINATION_URL}
+    environment:
+      AWS_DEFAULT_REGION:
+      AWS_ACCESS_KEY_ID:
+      AWS_SECRET_ACCESS_KEY:
+    depends_on:
+      - minio
+
+  # Redis for local comms of graph inputs between rollout and training workers
+  dr-redis:
+    image: dr-redis
+    container_name: dr-redis
+    # For easy debugging of redis config
+#   volumes:
+#     - ./container/redis.conf:/usr/local/etc/redis.conf
+
+  # Local S3 mock, primarily to keep minimal code changes in rollout and training workers
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+    container_name: minio
+    command: --compat server /data
+    healthcheck:
+      test: "curl -m 2 'http://localhost:9000/'"
+    volumes: 
+      - ../data:/data
+    environment:
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: miniokey
+
+  # ROS + Gazebo + Coach rollout worker
+  dr-simulation:
+    image: dr-simulation:latest
+    build:
+      context: .
+      dockerfile: ./container/Dockerfile.dr-simulation
+    # Allow external connections to gzserver
+    ports:
+      - 11345:11345
+    container_name: dr-simulation
+    runtime: nvidia
+    healthcheck:
+      test: '/home/robomaker/simulation-health.sh'
+    # For easy debugging, we can map the local files over the container
+    volumes:
+      - ./patch/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/launch/distributed_training.launch:/home/robomaker/workspace/bundle-store/deepracer-simapp/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/launch/distributed_training.launch
+      - ./patch/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/launch/evaluation.launch:/home/robomaker/workspace/bundle-store/deepracer-simapp/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/launch/evaluation.launch
+#     - ./patch/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/meshes/Canada_Training/textures/Canada_track_revir_U_01.png:/home/robomaker/workspace/bundle-store/deepracer-simapp/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/meshes/Canada_Training/textures/Canada_track_revir_U_01.png
+#     - ./patch/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/meshes/Canada_Training/textures/Canada_track_revir_T_01.png:/home/robomaker/workspace/bundle-store/deepracer-simapp/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/meshes/Canada_Training/textures/Canada_track_revir_T_01.png
+#     - ./patch/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/models/Canada_Training/Canada_Training_model.sdf:/home/robomaker/workspace/bundle-store/deepracer-simapp/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/models/Canada_Training/Canada_Training_model.sdf
+      - ./patch/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/models/Bowtie_track_mixture:/home/robomaker/workspace/bundle-store/deepracer-simapp/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/models/Bowtie_track_mixture
+      - ./patch/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/meshes/bowtie_eval_02:/home/robomaker/workspace/bundle-store/deepracer-simapp/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/meshes/bowtie_eval_02
+      - ./patch/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/worlds/Bowtie_track_mixture.world:/home/robomaker/workspace/bundle-store/deepracer-simapp/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/worlds/Bowtie_track_mixture.world
+      - ./patch/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/routes/Bowtie_track_mixture.npy:/home/robomaker/workspace/bundle-store/deepracer-simapp/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/routes/Bowtie_track_mixture.npy
+      - ./patch/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/models/Bowtie_track_lights:/home/robomaker/workspace/bundle-store/deepracer-simapp/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/models/Bowtie_track_lights
+      - ./patch/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/meshes/bowtie_eval_01:/home/robomaker/workspace/bundle-store/deepracer-simapp/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/meshes/bowtie_eval_01
+      - ./patch/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/worlds/Bowtie_track_lights.world:/home/robomaker/workspace/bundle-store/deepracer-simapp/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/worlds/Bowtie_track_lights.world
+      - ./patch/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/routes/Bowtie_track_lights.npy:/home/robomaker/workspace/bundle-store/deepracer-simapp/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/routes/Bowtie_track_lights.npy
+      - ./patch/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/routes/reinvent_wood.npy:/home/robomaker/workspace/bundle-store/deepracer-simapp/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/routes/reinvent_wood.npy
+      - ./patch/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/routes/reinvent_carpet.npy:/home/robomaker/workspace/bundle-store/deepracer-simapp/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/routes/reinvent_carpet.npy
+#     - ./patch/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/urdf/racecar.gazebo:/home/robomaker/workspace/bundle-store/deepracer-simapp/opt/install/deepracer_simulation_environment/share/deepracer_simulation_environment/urdf/racecar.gazebo
+      - ./patch/opt/install/sagemaker_rl_agent/lib/python3.5/site-packages/markov:/home/robomaker/workspace/bundle-store/deepracer-simapp/opt/install/sagemaker_rl_agent/lib/python3.5/site-packages/markov
+#     - ./container/entry_script2.sh:/home/robomaker/entry_script2.sh
+#     - ./container/snapshots.sh:/home/robomaker/snapshots.sh
+#     - ./container/streamer.sh:/home/robomaker/streamer.sh
+        # Map experiment folder for tensorboard and coach gif/mp4 dumps
+      - ./experiment:/opt/ml/model
+#     - /tmp/.X11-unix:/tmp/.X11-unix
+#   devices:
+#     - /dev/dri:/dev/dri
+#   privileged: true
+    command: ['/home/robomaker/entry_script2.sh stdbuf -oL -eL roslaunch deepracer_simulation_environment ${LAUNCH_FILE}']
+    logging:
+      driver: fluentd
+    depends_on:
+      - dr-logger
+      - minio
+      - dr-redis
+      - dr-uploader
+    environment:
+      AWS_ACCESS_KEY_ID: minio
+      AWS_SECRET_ACCESS_KEY: miniokey
+      AWS_ENDPOINT_URL: http://minio:9000
+      AWS_ROBOMAKER_SIMULATION_JOB_ARN:
+      AWS_ROBOMAKER_SIMULATION_JOB_ID:
+      AWS_ROBOMAKER_SIMULATION_RUN_ID:
+      AWS_ROBOMAKER_SIMULATION_APPLICATION_SETUP:
+      APP_REGION:
+      KINESIS_VIDEO_STREAM_NAME:
+      NUMBER_OF_TRIALS:
+      NUMBER_OF_EPISODES:
+      WORLD_NAME:
+      ALTERNATE_DRIVING_DIRECTION:
+      TARGET_REWARD_SCORE:
+      METRIC_NAME:
+      METRIC_NAMESPACE:
+      METRICS_S3_BUCKET:
+      METRICS_S3_OBJECT_KEY:
+      MODEL_METADATA_FILE_S3_KEY:
+      REWARD_FILE_S3_KEY:
+      MODEL_S3_BUCKET:
+      MODEL_S3_PREFIX:
+      ROBOMAKER_SIMULATION_JOB_ACCOUNT_ID:
+      SAGEMAKER_SHARED_S3_BUCKET:
+      SAGEMAKER_SHARED_S3_PREFIX:
+      TRAINING_JOB_ARN:
+      REDIS_HOST: dr-redis
+      MAX_JOB_DURATION:
+      ROBOMAKER_ROS_MASTER_URI:
+      ROBOMAKER_GAZEBO_MASTER_URI:
+      # The display here is specifically set for the privileged GPU talking through a unix socket
+      DISPLAY: :0
+      SM_TRAINING_ENV:
+      CHANGE_START_POSITION:
+      START_POSITION:
+      SIM_UPDATE_RATE:
+
+  # Training worker
+  # This can support GPU or not, depending on '-gpu' suffix in commented parts below
+  dr-training:
+    image: dr-training-gpu:latest
+#   image: dr-training:latest
+    build:
+      context: .
+      dockerfile: ./container/Dockerfile.dr-training-gpu
+#     dockerfile: ./container/Dockerfile.dr-training
+    # For easy debugging, we can map the local files over the container
+#   volumes: 
+#     - ./patch/opt/install/sagemaker_rl_agent/lib/python3.5/site-packages/markov:/home/robomaker/workspace/bundle-store/deepracer-simapp/opt/install/sagemaker_rl_agent/lib/python3.5/site-packages/markov
+    runtime: nvidia
+    logging:
+      driver: fluentd
+    # tensorboard
+    ports:
+      - 6006:6006
+    stdin_open: true
+    tty: true
+    container_name: dr-training
+    command: ['python3 -m markov.training_worker ${TRAINING_WORKER_ARGS}']
+    depends_on:
+      - dr-logger
+      - minio
+      - dr-redis
+    environment:
+      NVIDIA_VISIBLE_DEVICES: 0
+      AWS_ACCESS_KEY_ID: minio
+      AWS_SECRET_ACCESS_KEY: miniokey
+      AWS_ENDPOINT_URL: http://minio:9000
+      AWS_ROBOMAKER_SIMULATION_JOB_ARN:
+      AWS_ROBOMAKER_SIMULATION_JOB_ID:
+      AWS_ROBOMAKER_SIMULATION_RUN_ID:
+      AWS_ROBOMAKER_SIMULATION_APPLICATION_SETUP:
+      APP_REGION:
+      KINESIS_VIDEO_STREAM_NAME:
+      NUMBER_OF_TRIALS:
+      NUMBER_OF_EPISODES:
+      WORLD_NAME:
+      ALTERNATE_DRIVING_DIRECTION:
+      TARGET_REWARD_SCORE:
+      METRIC_NAME:
+      METRIC_NAMESPACE:
+      METRICS_S3_BUCKET:
+      METRICS_S3_OBJECT_KEY:
+      MODEL_METADATA_FILE_S3_KEY:
+      REWARD_FILE_S3_KEY:
+      MODEL_S3_BUCKET:
+      MODEL_S3_PREFIX:
+      ROBOMAKER_SIMULATION_JOB_ACCOUNT_ID:
+      SAGEMAKER_SHARED_S3_BUCKET:
+      SAGEMAKER_SHARED_S3_PREFIX:
+      TRAINING_JOB_ARN:
+      REDIS_HOST: dr-redis
+      MAX_JOB_DURATION:
+      ROBOMAKER_ROS_MASTER_URI:
+      ROBOMAKER_GAZEBO_MASTER_URI:
+      SM_TRAINING_ENV:
