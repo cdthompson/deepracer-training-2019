@@ -18,10 +18,11 @@ What you'll find in this repo:
 
 | Race                                                         | Standing        |
 | ------------------------------------------------------------ | --------------- |
-| August 2019 Virtual Race<br />[Shanghai Sudu](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboard/Shanghai Sudu) | **102** of 1375 |
-| September 2019 Virtual Race<br />[Cumulo Carrera](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboard/Cumulo Carrera) | **132** of 1338 |
-| October 2019 Virtual Race<br />[Toronto Turnpike](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboard/Toronto Turnpike) | **60** of 1983  |
-| November 2019 Virtual Race<br />[Championship Cup Warm-up](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboard/Championship Cup Warm-up) | **8** of 904    |
+| August 2019 Virtual Race<br />[Shanghai Sudu](https://aws.amazon.com/deepracer/schedule-and-standings/leaderboard-virtual-shanghai-sudo-circuit-2019/) | **102** of 1375 |
+| September 2019 Virtual Race<br />[Cumulo Carrera](https://aws.amazon.com/deepracer/schedule-and-standings/leaderboard-virtual-cumulo-carrera-2019/) | **132** of 1338 |
+| October 2019 Virtual Race<br />[Toronto Turnpike](https://aws.amazon.com/deepracer/schedule-and-standings/leaderboard-virtual-toronto-turnpike-2019/) | **60** of 1983  |
+| November 2019 Virtual Race<br />[Championship Cup Warm-up](https://console.aws.amazon.com/deepracer/home?region=us-east-1#leaderboard/Championship%20Cup%20Warm-up) | **8** of 904    |
+| [AI Driving Olympics at NeurIPS](https://driving-olympics.ai/?page_id=24) | Phase I: Perception challenge: **Top 10**<br />Phase II: Simulation to Reality challenge: *did not place* |
 
 The code and scripts are shared here unfiltered.  Some items may be broken or hacky.  The goal was to educate myself about reinforcement learning and train competitive models, sometimes at the expense of good coding practices.  I'll be starting a new repo for any work I do on the 2020 DeepRacer races and won't be adding any more changes to this code.
 
