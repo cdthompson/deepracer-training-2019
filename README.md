@@ -138,7 +138,7 @@ For brevity, I'll pull out a few interesting sections but you can click to the [
 
 I had aspired to use airflow to work through a queue of training and evaluation jobs but ultimately didn't end up spending the time automating to that level.  The primary usage of airflow was to submit the model to the virtual league every ~30 minutes.  
 
-Unfortunately, the winners were so close that leaderboard position had a large part in getting to the top positions.  This would use Selenium and ChromeDriver submit the model, and also handle any authentication that might need to happen as part of that workflow.
+It was unfortunate but the winners were so close that luck and brute force had a large part in getting to the top positions.  This would use Selenium and ChromeDriver submit the model, and also handle any authentication that might need to happen as part of that workflow.
 
 [airflow/deepracer_submit_dag.py](airflow/deepracer_submit_dag.py) - Submit a model for evaluation every 30 minutes
 
