@@ -5,7 +5,7 @@ This is my full collection of tools, notebooks, scraps for participation in 2019
 What you'll find in this repo:
 
 - Local training assets: container Dockerfiles, launch scripts mostly in bash, monitoring scripts
-- AWS cloud-based training scripts: pre-dating local training, but also used to cloud evaluations of local training
+- AWS cloud-based training scripts: pre-dating my local training setup, but most useful for cloud-based evaluations of local training
 - Analysis Notebook
 - Models/Experiments: all the training sessions hyperparameters, reward functions, action space
 - RoboMaker simapp: scripts to build the bundle, source files to add or replace files within the bundle
